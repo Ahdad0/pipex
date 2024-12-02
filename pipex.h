@@ -7,5 +7,9 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <string.h>
+#include <stdlib.h>
+
+void	child(pid_t pipefd[2], char **av);
+void	parent(pid_t pipefd[2], char **av);
 
 #endif
