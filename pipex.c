@@ -3,11 +3,11 @@
 
 int main(int ac, char **av)
 {
-	/*if (ac < 5)
+	if (ac < 1)
 	{
 		printf("few arguments!");
 		return (1);
-	}*/
+	}
 	int id;
 	pid_t pipefd[2];
 	if (pipe(pipefd) == -1)
