@@ -52,7 +52,7 @@ static char	**ft_util(char **res, const char *s, char c, int c_word)
 	return (res);
 }
 
-char	**ft_split(char const *s, char c)
+char	**ft_split_cpy(char const *s, char c, char *av)
 {
 	char	**res;
 	int		c_word;
@@ -63,5 +63,8 @@ char	**ft_split(char const *s, char c)
 	res = malloc(sizeof(char *) * (c_word + 2));
 	if (res == NULL)
 		return (NULL);
-	return (ft_util(res, s, c, c_word));
+	ft_util(res, s, c, c_word);
+	res[c_word] = av;
+	res[c_word++] = NULL;
+	return (res);
 }

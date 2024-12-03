@@ -1,4 +1,4 @@
-SRCS = pipex.c child.c parent.c
+SRCS = pipex.c child.c parent.c ft_split_cpy.c ft_memcpy.c ft_split.c
 OBJS = $(SRCS:.c=.o)
 
 CFLAGS = -Wall -Wextra -Werror
