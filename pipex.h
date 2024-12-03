@@ -16,5 +16,6 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	**ft_split_cpy(char const *s, char c, char *av);
 char	**ft_split(char const *s, char c);
 char	*add(char *s);
+void	free_prev(char **res, int i);
 
 #endif

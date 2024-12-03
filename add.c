@@ -14,9 +14,8 @@ char	*add(char *s)
 		s[j] = '\0';
 	}
 	path = "/usr/bin/";
-	len = strlen(s) + strlen("/usr/bin/");
-	printf("len=%d\n", len);
-	new = malloc(len);
+	len = strlen(s) + strlen(path);
+	new = malloc(len + 1);
 	if (!new)
 		return (NULL);
 	int i = 0;

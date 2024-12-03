@@ -1,13 +1,5 @@
 #include "pipex.h"
 
-static char	**free_prev(char **res, int i)
-{
-	while (i--)
-		free(res[i]);
-	free(res);
-	return (NULL);
-}
-
 static int	count_word(const char *str, char c)
 {
 	int	i;
@@ -43,7 +35,7 @@ static char	**ft_util(char **res, const char *s, char c, int c_word)
 		len = j - e;
 		res[i] = malloc(len + 1);
 		if (!res[i])
-			return (free_prev(res, i));
+			return (free_prev(res, i), NULL);
 		ft_memcpy(res[i], s + e, len);
 		res[i][len] = '\0';
 		i++;
