@@ -3,10 +3,20 @@
 
 int main(int ac, char **av)
 {
-	if (ac < 1)
+	if (ac < 5)
 	{
-		printf("few arguments!");
+		printf("few argument!");
 		return (1);
+	}
+	if (access(av[1], F_OK) == -1)
+	{
+		printf("%s: %s\n", av[1], strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+	if (access(av[4], F_OK) == -1)
+	{
+		printf("%s: %s\n", av[4], strerror(errno));
+		exit(EXIT_FAILURE);
 	}
 	int id;
 	pid_t pipefd[2];
@@ -17,7 +27,7 @@ int main(int ac, char **av)
     }
 	if ((id = fork()) == -1)
 	{
-		perror("");
+		perror("fork");
 		exit(EXIT_FAILURE);
 	}
 	if (id == 0)

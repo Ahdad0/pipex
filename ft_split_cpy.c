@@ -64,7 +64,7 @@ char	**ft_split_cpy(char const *s, char c, char *av)
 	if (res == NULL)
 		return (NULL);
 	ft_util(res, s, c, c_word);
-	res[c_word] = av;
-	res[c_word++] = NULL;
+	res[c_word++] = av;
+	res[c_word] = NULL;
 	return (res);
 }
