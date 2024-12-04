@@ -3,23 +3,25 @@
 
 int main(int ac, char **av)
 {
-	(void)ac;
-	/*if (ac < 5)
+	int	id;
+
+	if (ac != 5)
 	{
-		printf("few argument!");
-		return (1);
+		write(1, "few argument!\n", 14);
+		exit(EXIT_FAILURE);
 	}
 	if (access(av[1], F_OK) == -1 || access(av[1], R_OK) == -1)
 	{
-		printf("%s: %s\n", av[1], strerror(errno));
+		write(1, av[1], sizeof(av[1]));
+		write(1, ": ", 2);
+		perror("");
 		exit(EXIT_FAILURE);
-	}*/
-	int id;
+	}
 	pid_t pipefd[2];
 	if (pipe(pipefd) == -1)
 	{
         perror("pipe");
-        return 1;
+		exit(EXIT_FAILURE);
     }
 	if ((id = fork()) == -1)
 	{
@@ -27,13 +29,11 @@ int main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	}
 	if (id == 0)
-	{
 		child(pipefd, av);
-	}
 	else
 	{
 		wait(NULL);
 		parent(pipefd, av);
 	}
-	//exit(EXIT_SUCCESS);
+	exit(EXIT_SUCCESS);
 }
