@@ -1,5 +1,5 @@
-SRCS = pipex.c child.c parent.c ft_split_cpy.c ft_memcpy.c ft_split.c
-OBJS = $(SRCS:.c=.o)
+SRCS = pipex.c child.c parent.c ft_split_cpy.c ft_memcpy.c ft_split.c add.c ft_strlen.c\
+	get_path.c
 
 CFLAGS = -Wall -Wextra -Werror
 
@@ -9,8 +9,8 @@ NAME = pipex
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+$(NAME):
+	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)
