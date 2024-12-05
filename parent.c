@@ -6,7 +6,7 @@ void	parent(pid_t pipefd[2], char **av)
 	char	*path;
 	int		fd1;
 
-	fd1 = open(av[4], O_WRONLY | O_CREAT, 0644);
+	fd1 = open(av[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd1 == -1)
 	{
 		write(1, av[4], sizeof(av[4]));
@@ -26,11 +26,13 @@ void	parent(pid_t pipefd[2], char **av)
 		free_prev(agv, strlen(*agv) - 1);
 		exit(EXIT_FAILURE);
 	}
-	if (execve(path, agv, environ) == -1)
+	dup2(pipefd[0], 0);
+	dup2(fd1, 1);
+	if (execve(path, agv, NULL) == -1)
 	{
 		free(path);
 		free_prev(agv, strlen(*agv) - 1);
-		perror("execve");
+		perror("execve p");
 		exit(EXIT_FAILURE);
 	}
 	free(path);

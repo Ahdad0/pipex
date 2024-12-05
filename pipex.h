@@ -20,7 +20,7 @@ char	**ft_split(char const *s, char c);
 char	*add(char *s);
 void	free_prev(char **res, int i);
 size_t	ft_strlen(char *s);
-//char	*get_path(char *s);
+char	*get_path(char *s);
 char	*ft_strdup(char *s);
 
 #endif

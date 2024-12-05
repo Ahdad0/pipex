@@ -14,6 +14,7 @@ static void	child_pro(int fd[2], char *s)
 		perror("Error");
 		exit(EXIT_FAILURE);
 	}
+	exit(0);
 }
 
 static char	*parent_pro(int fd[2])
@@ -23,7 +24,7 @@ static char	*parent_pro(int fd[2])
 	char	*new;
 
 	byte = read(fd[0], buffer, sizeof(buffer));
-	buffer[byte] = '\0';
+	buffer[byte - 1] = '\0';
 	new = ft_strdup(buffer);
 	return (new);
 }
@@ -32,13 +33,19 @@ char	*get_path(char *s)
 {
 	int	fd[2];
 	char	*path;
+	pid_t	id;
 
-	if (pipe(fd) == -1)
+	if (pipe(fd) == -1 || (id = fork()) == -1)
 	{
 		perror("Error");
 		exit(EXIT_FAILURE);
 	}
-	child_pro(fd, s);
-	path = parent_pro(fd);
+	if (id == 0)
+		child_pro(fd, s);
+	else
+	{
+		wait(NULL);
+		path = parent_pro(fd);
+	}
 	return (path);
 }

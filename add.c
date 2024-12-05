@@ -2,7 +2,6 @@
 
 char	*add(char *s)
 {
-	char	*new;
 	int		j;
 	char	*path;
 	
@@ -14,12 +13,7 @@ char	*add(char *s)
 		s[j] = '\0';
 	}
 	path = get_path(s);
-	new = ft_strdup(path);
-	if (!new)
-	{
-		free(path);
+	if (!path)
 		return (NULL);
-	}
-	free(path);
-	return (new);
+	return (path);
 }

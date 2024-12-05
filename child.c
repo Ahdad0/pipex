@@ -9,12 +9,12 @@ void child(pid_t pipefd[2], char **av)
 	if (!agv)
 		exit(EXIT_FAILURE);
 	path = add(av[2]);
-	
 	if (!path)
 	{
 		free_prev(agv, strlen(*agv) - 1);
 		exit(EXIT_FAILURE);
 	}
+	//path[ft_strlen(path) - 1] = '\0';
 	close(pipefd[0]);
 	dup2(pipefd[1], 1);
 	if (execve(path, agv, environ) == -1)
@@ -24,7 +24,8 @@ void child(pid_t pipefd[2], char **av)
 		perror("execve failed"); 
 		exit(EXIT_FAILURE);
 	}
+	close(pipefd[1]);
 	free(path);
 	free_prev(agv, strlen(*agv) - 1);
-	close(pipefd[1]);
+	exit(0);
 }

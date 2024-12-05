@@ -1,8 +1,26 @@
 #include "pipex.h"
 #include <stdlib.h>
 
-int main(int ac, char **av)
+static void	print_error(char *s)
 {
+	write(1, s, sizeof(s));
+	write(1, ": ", 2);
+	perror("");
+}
+
+static int	check_file(char *av)
+{
+	if (access(av, F_OK) == -1 || access(av, R_OK) == -1)
+	{
+		print_error(av);
+		return (-1);
+	}
+	return (0);
+}
+
+int	main(int ac, char **av)
+{
+	pid_t	pipefd[2];
 	int	id;
 
 	if (ac != 5)
@@ -10,20 +28,9 @@ int main(int ac, char **av)
 		write(1, "few argument!\n", 14);
 		exit(EXIT_FAILURE);
 	}
-	if (access(av[1], F_OK) == -1 || access(av[1], R_OK) == -1)
-	{
-		write(1, av[1], sizeof(av[1]));
-		write(1, ": ", 2);
-		perror("");
+	if (check_file(av[1]) == -1)
 		exit(EXIT_FAILURE);
-	}
-	pid_t pipefd[2];
-	if (pipe(pipefd) == -1)
-	{
-        perror("pipe");
-		exit(EXIT_FAILURE);
-    }
-	if ((id = fork()) == -1)
+	if (pipe(pipefd) == -1 || (id = fork()) == -1)
 	{
 		perror("fork");
 		exit(EXIT_FAILURE);

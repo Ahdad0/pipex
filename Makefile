@@ -12,7 +12,7 @@ NAME = pipex
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(SRCS) -o $(NAME)
+	$(CC) -g $(CFLAGS) $(SRCS) -o $(NAME)
 
 clean:
 	rm -f $(OBJS)
