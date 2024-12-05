@@ -5,7 +5,6 @@ void	free_prev(char **res, int i)
 	while (i--)
 		free(res[i]);
 	free(res);
-	
 }
 
 static int	count_word(const char *str, char c)

@@ -9,6 +9,7 @@ void child(pid_t pipefd[2], char **av)
 	if (!agv)
 		exit(EXIT_FAILURE);
 	path = add(av[2]);
+	
 	if (!path)
 	{
 		free_prev(agv, strlen(*agv) - 1);

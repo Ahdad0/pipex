@@ -16,9 +16,7 @@ void	parent(pid_t pipefd[2], char **av)
 	}
 	close(pipefd[1]);
 	dup2(pipefd[0], 0);
-	close(pipefd[0]);
 	dup2(fd1, 1);
-	close(fd1);
 	agv = ft_split(av[3], ' ');
 	if (!agv)
 		exit(EXIT_FAILURE);
