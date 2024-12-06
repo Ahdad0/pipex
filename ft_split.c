@@ -55,5 +55,8 @@ char	**ft_split(char const *s, char c)
 	res = malloc(sizeof(char *) * (c_word + 2));
 	if (res == NULL)
 		return (NULL);
-	return (ft_util(res, s, c, c_word));
+	if (ft_util(res, s, c, c_word) == NULL)
+		return (NULL);
+	res[c_word] = NULL;
+	return (res);
 }

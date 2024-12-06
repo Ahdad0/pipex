@@ -3,8 +3,8 @@
 
 static void	print_error(char *s)
 {
-	write(1, s, sizeof(s));
-	write(1, ": ", 2);
+	write(2, s, sizeof(s));
+	write(2, ": ", 2);
 	perror("");
 }
 
@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 
 	if (ac != 5)
 	{
-		write(1, "few argument!\n", 14);
+		write(2, "few argument!\n", 14);
 		exit(EXIT_FAILURE);
 	}
 	if (check_file(av[1]) == -1)

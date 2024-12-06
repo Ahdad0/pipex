@@ -4,28 +4,31 @@ void child(pid_t pipefd[2], char **av)
 {
 	char	**agv;
 	char	*path;
+	int		fd;
 
-	agv = ft_split_cpy(av[2], ' ', av[1]);
+	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
+		exit(EXIT_FAILURE);
+	agv = ft_split(av[2], ' ');
 	if (!agv)
 		exit(EXIT_FAILURE);
-	path = add(av[2]);
+	path = add(agv[0]);
 	if (!path)
 	{
-		free_prev(agv, strlen(*agv) - 1);
+		free_prev(agv, len_matrix(agv) - 1);
 		exit(EXIT_FAILURE);
 	}
-	//path[ft_strlen(path) - 1] = '\0';
-	close(pipefd[0]);
+	dup2(fd, 0);
 	dup2(pipefd[1], 1);
 	if (execve(path, agv, environ) == -1)
 	{
 		free(path);
-		free_prev(agv, strlen(*agv) - 1);
-		perror("execve failed"); 
+		free_prev(agv, len_matrix(agv) - 1);
+		perror("execve child"); 
 		exit(EXIT_FAILURE);
 	}
 	close(pipefd[1]);
 	free(path);
-	free_prev(agv, strlen(*agv) - 1);
+	free_prev(agv, len_matrix(agv) - 1);
 	exit(0);
 }

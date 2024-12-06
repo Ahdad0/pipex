@@ -1,6 +1,6 @@
 #include "pipex.h"
 
-static int	child_pro(int fd[2], char *s)
+static void	child_pro(int fd[2], char *s)
 {
 	char *av[3];
 
@@ -11,8 +11,7 @@ static int	child_pro(int fd[2], char *s)
 	close(fd[1]);
 	if (execve("/usr/bin/which", av, environ) == -1)
 	{
-		write(2, s, ft_strlen(s));
-		perror("");
+		perror("execve");
 		exit(EXIT_FAILURE);
 	}
 	exit(0);
@@ -24,17 +23,9 @@ static char	*parent_pro(int fd[2])
 	int		byte;
 	char	*new;
 
-	close(fd[1]);
 	byte = read(fd[0], buffer, sizeof(buffer));
-	if (byte == -1 || byte == 0)
-		return (NULL);
 	buffer[byte - 1] = '\0';
-	if (access(buffer, X_OK) == -1)
-		return (NULL);
-	close(fd[0]);
 	new = ft_strdup(buffer);
-	if (new == NULL)
-		return (NULL);
 	return (new);
 }
 
@@ -61,8 +52,6 @@ char	*get_path(char *s)
 	{
 		wait(NULL);
 		path = parent_pro(fd);
-		if (path == NULL)
-			return (NULL);
 	}
 	return (path);
 }

@@ -22,5 +22,6 @@ void	free_prev(char **res, int i);
 size_t	ft_strlen(char *s);
 char	*get_path(char *s);
 char	*ft_strdup(char *s);
+size_t	len_matrix(char **s);
 
 #endif
