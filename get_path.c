@@ -1,74 +1,65 @@
 #include "pipex.h"
 
-static void	child_pro(int fd[2], char *s)
+static char *sub(char *path)
 {
-	char *av[3];
-
-	av[0] = "which";
-	av[1] = s;
-	av[2] = NULL;
-	dup2(fd[1], 1);
-	close(fd[1]);
-	if (execve("/usr/bin/which", av, environ) == -1)
+	char *new = malloc(1024);
+	int i = 5, j = 0;
+	while (path[i])
 	{
-		perror("d");
+		new[j++] = path[i];
+		i++;
 	}
-}
-
-static char	*parent_pro(int fd[2])
-{
-	char	buffer[50];
-	int		byte;
-	char	*new;
-
-	close(fd[1]);
-	byte = read(fd[0], buffer, sizeof(buffer));
-	if (byte == -1 || byte == 0)
-	{
-		if (access(buffer, X_OK) == -1)
-		{
-			// write(2, s, ft_strlen(s));
-			// write(2, ": ", 2);
-			// write(2, ": Command not found!\n", 21);
-			perror("");
-		}
-		exit(EXIT_FAILURE);
-	}
-	buffer[byte - 1] = '\0';
-	close(fd[0]);
-	// if (access(buffer, X_OK) == -1)
-	// {
-	// 	perror("");
-	// 	return (NULL);
-	// }
-	new = ft_strdup(buffer);
-	if (new == NULL)
-		return (NULL);
+	new[j] = '\0';
 	return (new);
 }
 
-char	*get_path(char *s)
+char *sub_colon(char *s, int *p)
 {
-	int	fd[2];
-	char	*path;
-	pid_t	id;
-
-	path = NULL;
-	if (pipe(fd) == -1 || (id = fork()) == -1)
+	char *new  = malloc(1024);
+	if (!new)
+		return (NULL);
+	int i = 0;
+	while (s[*p])
 	{
-		perror("Error");
-		exit(EXIT_FAILURE);
+		if (s[*p] == ':')
+		{
+			break;
+		}
+		new[i++] = s[*p];
+		(*p)++;
 	}
-	if (id == 0)
+	new[i++] = '/';
+	new[i] = '\0';
+	return (new);
+}
+char *get_path(char *av)
+{
+	char *s = "PATH";
+	char *path;
+	int i = 0, j = 0;
+	while (environ[i])
 	{
-		child_pro(fd, s);
+		if (environ[i][0] == 'P')
+		{
+			j = 0;
+			while (environ[i][j] == s[j])
+				j++;
+			if (s[j] == '\0')
+				path = environ[i];
+		}
+		i++;
 	}
-	else
+	char *ori = sub(path);
+	int p = 0;
+	while (1)
 	{
-		wait(NULL);
-		path = parent_pro(fd);
-		if (path == NULL)
-			return (NULL);
+		char *new = sub_colon(ori, &p);
+		char *npath = ft_strjoin(new, av);
+		if (access(npath, X_OK) != -1)
+			return (npath);
+		if (strchr(ori + p, ':') == NULL)
+			break;
+		p++;
 	}
-	return (path);
+	return (NULL);
 }

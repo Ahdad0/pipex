@@ -23,5 +23,6 @@ size_t	ft_strlen(char *s);
 char	*get_path(char *s);
 char	*ft_strdup(char *s);
 size_t	len_matrix(char **s);
+char	*ft_strjoin(char *s1, char *s2);
 
 #endif
