@@ -15,7 +15,7 @@ static void	child_pro(int fd[2], char *s)
 	}
 }
 
-static char	*parent_pro(int fd[2], char *s)
+static char	*parent_pro(int fd[2])
 {
 	char	buffer[50];
 	int		byte;
@@ -25,17 +25,22 @@ static char	*parent_pro(int fd[2], char *s)
 	byte = read(fd[0], buffer, sizeof(buffer));
 	if (byte == -1 || byte == 0)
 	{
-		write(2, s, ft_strlen(s));
-		write(2, ": Command not found!\n", 21);
-		return (NULL);
+		if (access(buffer, X_OK) == -1)
+		{
+			// write(2, s, ft_strlen(s));
+			// write(2, ": ", 2);
+			// write(2, ": Command not found!\n", 21);
+			perror("");
+		}
+		exit(EXIT_FAILURE);
 	}
 	buffer[byte - 1] = '\0';
 	close(fd[0]);
-	if (access(buffer, X_OK) == -1)
-	{
-		perror("");
-		return (NULL);
-	}
+	// if (access(buffer, X_OK) == -1)
+	// {
+	// 	perror("");
+	// 	return (NULL);
+	// }
 	new = ft_strdup(buffer);
 	if (new == NULL)
 		return (NULL);
@@ -61,7 +66,7 @@ char	*get_path(char *s)
 	else
 	{
 		wait(NULL);
-		path = parent_pro(fd, s);
+		path = parent_pro(fd);
 		if (path == NULL)
 			return (NULL);
 	}
