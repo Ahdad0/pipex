@@ -18,6 +18,7 @@ void child(pid_t pipefd[2], char **av)
 		free_prev(agv, len_matrix(agv) - 1);
 		exit(EXIT_FAILURE);
 	}
+	
 	dup2(fd, 0);
 	dup2(pipefd[1], 1);
 	if (execve(path, agv, environ) == -1)
