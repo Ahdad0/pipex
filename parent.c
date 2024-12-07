@@ -15,8 +15,10 @@ void	parent(pid_t pipefd[2], char **av)
 		exit(EXIT_FAILURE);
 	}
 	agv = ft_split(av[3], ' ');
-	if (!agv)
+	if (!agv || !agv[0])
+	{
 		exit(EXIT_FAILURE);
+	}
 	path = add(agv[0]);
 	if (!path)
 	{

@@ -32,34 +32,58 @@ char *sub_colon(char *s, int *p)
 	new[i] = '\0';
 	return (new);
 }
-char *get_path(char *av)
+static char	*env(char *path)
 {
-	char *s = "PATH";
-	char *path;
-	int i = 0, j = 0;
+	char	*new;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
 	while (environ[i])
 	{
 		if (environ[i][0] == 'P')
 		{
 			j = 0;
-			while (environ[i][j] == s[j])
+			while (environ[i][j] == path[j])
 				j++;
-			if (s[j] == '\0')
-				path = environ[i];
+			if (path[j] == '\0')
+				new = ft_strdup(environ[i]);
 		}
 		i++;
 	}
+	return (new);
+}
+
+char *get_path(char *av)
+{
+	char *path;
+	char *npath;
+	char *new;
+
+	path = env("PATH");
 	char *ori = sub(path);
 	int p = 0;
 	while (1)
 	{
-		char *new = sub_colon(ori, &p);
-		char *npath = ft_strjoin(new, av);
+		new = sub_colon(ori, &p);
+		npath = ft_strjoin(new, av);
+		free(new);
 		if (access(npath, X_OK) != -1)
-			return (npath);
+			return (free(ori), npath);
+		free(npath);
 		if (strchr(ori + p, ':') == NULL)
 			break;
 		p++;
 	}
-	return (NULL);
+	if (access(av, X_OK) == -1)
+	{
+		//write(2, av, ft_strlen(av));
+		write(2, "Command not found: ", 20);
+		write(2, av, ft_strlen(av));
+		write(2, "\n", 1);
+		// perror(av);
+		exit(127);
+	}
+	return (free(ori), NULL);
 }

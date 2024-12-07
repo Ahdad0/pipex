@@ -2,15 +2,19 @@
 
 char	*add(char *s)
 {
-	int		j;
 	char	*path;
 	
-	j = 0;
-	if (strchr(s, ' ') != NULL)
+	if (s[0] == '/')
 	{
-		while (s[j] != ' ')
-			j++;
-		s[j] = '\0';
+		if (access(s, F_OK) == -1)
+		{
+			// write(2, s, ft_strlen(s));
+			// write(2, ": ", 2);
+			perror(s);
+			exit(127);
+		}
+		else
+			return (s);
 	}
 	path = get_path(s);
 	if (!path)

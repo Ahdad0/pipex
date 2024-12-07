@@ -1,0 +1,65 @@
+==1810108== Memcheck, a memory error detector
+==1810108== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1810108== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1810108== Command: ./pipex Makefile cat cat outf
+==1810108== 
+==1810109== Memcheck, a memory error detector
+==1810109== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1810109== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1810109== Command: /usr/bin/cat
+==1810109== 
+==1810109== 
+==1810109== FILE DESCRIPTORS: 3 open (0 std) at exit.
+==1810109== Open file descriptor 5: /home/abahaded/Desktop/pipex/Makefile
+==1810109==    <inherited from parent>
+==1810109== 
+==1810109== Open file descriptor 4:
+==1810109==    <inherited from parent>
+==1810109== 
+==1810109== Open file descriptor 3:
+==1810109==    <inherited from parent>
+==1810109== 
+==1810109== 
+==1810109== HEAP SUMMARY:
+==1810109==     in use at exit: 0 bytes in 0 blocks
+==1810109==   total heap usage: 31 allocs, 31 frees, 139,232 bytes allocated
+==1810109== 
+==1810109== All heap blocks were freed -- no leaks are possible
+==1810109== 
+==1810109== For lists of detected and suppressed errors, rerun with: -s
+==1810109== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==1810108== Memcheck, a memory error detector
+==1810108== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1810108== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1810108== Command: /usr/bin/cat
+==1810108== 
+==1810108== 
+==1810108== Process terminating with default action of signal 2 (SIGINT)
+==1810108==    at 0x49857E0: read (read.c:26)
+==1810108==    by 0x10BBA5: ??? (in /usr/bin/cat)
+==1810108==    by 0x10B4ED: ??? (in /usr/bin/cat)
+==1810108==    by 0x489AD8F: (below main) (libc_start_call_main.h:58)
+==1810108== 
+==1810108== FILE DESCRIPTORS: 5 open (3 std) at exit.
+==1810108== Open file descriptor 5: /home/abahaded/Desktop/pipex/outf
+==1810108==    <inherited from parent>
+==1810108== 
+==1810108== Open file descriptor 3:
+==1810108==    <inherited from parent>
+==1810108== 
+==1810108== 
+==1810108== HEAP SUMMARY:
+==1810108==     in use at exit: 135,211 bytes in 3 blocks
+==1810108==   total heap usage: 3 allocs, 0 frees, 135,211 bytes allocated
+==1810108== 
+==1810108== LEAK SUMMARY:
+==1810108==    definitely lost: 0 bytes in 0 blocks
+==1810108==    indirectly lost: 0 bytes in 0 blocks
+==1810108==      possibly lost: 0 bytes in 0 blocks
+==1810108==    still reachable: 135,211 bytes in 3 blocks
+==1810108==         suppressed: 0 bytes in 0 blocks
+==1810108== Reachable blocks (those to which a pointer was found) are not shown.
+==1810108== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==1810108== 
+==1810108== For lists of detected and suppressed errors, rerun with: -s
+==1810108== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -28,6 +28,11 @@ int	main(int ac, char **av)
 		write(2, "few argument!\n", 14);
 		exit(EXIT_FAILURE);
 	}
+	// if (av[2][0] == ' ' || av[3][0] == ' ')
+	// {
+	// 	write(2, "Command not found\n", 19);
+	// 	exit(127);
+	// }
 	if (check_file(av[1]) == -1)
 		exit(EXIT_FAILURE);
 	if (pipe(pipefd) == -1 || (id = fork()) == -1)
