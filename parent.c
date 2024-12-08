@@ -1,20 +1,20 @@
 #include "pipex.h"
 
-void	parent(pid_t pipefd[2], char **av)
+void	parent(int ac, char **av)
 {
 	char	**agv;
 	char	*path;
 	int		fd1;
 
-	fd1 = open(av[4], O_WRONLY | O_TRUNC | O_CREAT, 0644);
+	fd1 = open(av[ac - 1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 	if (fd1 == -1)
 	{
-		write(1, av[4], ft_strlen(av[4]));
+		write(1, av[ac - 1], ft_strlen(av[ac - 1]));
 		write(1, ": ", 2);
 		perror("");
 		exit(EXIT_FAILURE);
 	}
-	agv = ft_split(av[3], ' ');
+	agv = ft_split(av[ac - 2], ' ');
 	if (!agv || !agv[0])
 	{
 		write(2, "Command not found\n", 19);
@@ -26,8 +26,8 @@ void	parent(pid_t pipefd[2], char **av)
 		free_prev(agv, len_matrix(agv) - 1);
 		exit(EXIT_FAILURE);
 	}
-	close(pipefd[1]);
-	dup2(pipefd[0], 0);
+	// close(pipefd[1]);
+	// dup2(pipefd[0], 0);
 	dup2(fd1, 1);
 	if (execve(path, agv, NULL) == -1)
 	{

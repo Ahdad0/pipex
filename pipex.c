@@ -19,27 +19,20 @@
 
 int	main(int ac, char **av)
 {
-	pid_t	pipefd[2];
-	int	id;
+	int		fd;
 
-	if (ac != 5)
+	if (ac < 5)
 	{
 		write(2, "few argument!\n", 14);
 		exit(EXIT_FAILURE);
 	}
-	// if (check_file(av) == -1)
-	// 	exit(EXIT_FAILURE);
-	if (pipe(pipefd) == -1 || (id = fork()) == -1)
+	fd = open(av[1], O_RDONLY);
+	if (fd == -1)
 	{
-		perror("fork");
+		perror(av[1]);
 		exit(EXIT_FAILURE);
 	}
-	if (id == 0)
-		child(pipefd, av);
-	else
-	{
-		wait(NULL);
-		parent(pipefd, av);
-	}
+	dup2(fd, 0);
+	child(ac, av);
 	exit(EXIT_SUCCESS);
 }
