@@ -1,22 +1,21 @@
 #include "pipex.h"
 #include <stdlib.h>
 
-static void	print_error(char *s)
-{
-	write(2, s, sizeof(s));
-	write(2, ": ", 2);
-	perror("");
-}
+// static void	print_error(char *s)
+// {
+// 	perror(s);
+// }
 
-static int	check_file(char *av)
-{
-	if (access(av, F_OK) == -1 || access(av, R_OK) == -1)
-	{
-		print_error(av);
-		return (-1);
-	}
-	return (0);
-}
+// static int	check_file(char **av)
+// {
+// 	if (access(av[1], F_OK) == -1)
+// 	{
+// 		print_error(av[1]);
+// 		return (-1);
+// 	}
+	
+// 	return (0);
+// }
 
 int	main(int ac, char **av)
 {
@@ -28,13 +27,8 @@ int	main(int ac, char **av)
 		write(2, "few argument!\n", 14);
 		exit(EXIT_FAILURE);
 	}
-	// if (av[2][0] == ' ' || av[3][0] == ' ')
-	// {
-	// 	write(2, "Command not found\n", 19);
-	// 	exit(127);
-	// }
-	if (check_file(av[1]) == -1)
-		exit(EXIT_FAILURE);
+	// if (check_file(av) == -1)
+	// 	exit(EXIT_FAILURE);
 	if (pipe(pipefd) == -1 || (id = fork()) == -1)
 	{
 		perror("fork");

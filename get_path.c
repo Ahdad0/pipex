@@ -63,6 +63,7 @@ char *get_path(char *av)
 
 	path = env("PATH");
 	char *ori = sub(path);
+	free(path);
 	int p = 0;
 	while (1)
 	{
@@ -78,11 +79,10 @@ char *get_path(char *av)
 	}
 	if (access(av, X_OK) == -1)
 	{
-		//write(2, av, ft_strlen(av));
+		free(ori);
 		write(2, "Command not found: ", 20);
 		write(2, av, ft_strlen(av));
 		write(2, "\n", 1);
-		// perror(av);
 		exit(127);
 	}
 	return (free(ori), NULL);

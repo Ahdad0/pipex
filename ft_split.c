@@ -49,8 +49,11 @@ char	**ft_split(char const *s, char c)
 	char	**res;
 	int		c_word;
 
-	if (!s)
-		return (NULL);
+	if (!s || *s == '\0')
+	{
+		write(2, "Permission denied\n", 19);
+		exit(EXIT_FAILURE);
+	}
 	c_word = count_word(s, c);
 	res = malloc(sizeof(char *) * (c_word + 2));
 	if (res == NULL)

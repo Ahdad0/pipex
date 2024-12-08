@@ -17,6 +17,7 @@ void	parent(pid_t pipefd[2], char **av)
 	agv = ft_split(av[3], ' ');
 	if (!agv || !agv[0])
 	{
+		write(2, "Command not found\n", 19);
 		exit(EXIT_FAILURE);
 	}
 	path = add(agv[0]);
